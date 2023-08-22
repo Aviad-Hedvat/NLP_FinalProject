@@ -7,7 +7,8 @@ from livelossplot.tf_keras import PlotLossesCallback
 
 from keras import Sequential
 from keras.layers import InputLayer, SpatialDropout1D, Bidirectional, LSTM, Embedding, Dense
-from keras.preprocessing.sequence import pad_sequences
+from keras.utils import pad_sequences
+# from keras.preprocessing.sequence import pad_sequences
 from keras.callbacks import EarlyStopping
 
 
