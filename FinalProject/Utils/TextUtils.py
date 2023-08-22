@@ -40,7 +40,7 @@ def html_scrape(filepath: str) -> List[str]:
             if tag_visible(text) and not (text.isspace() or text == ""):
                 rv.append(text)
 
-        return rv
+    return rv
 
 
 def tag_visible(element) -> bool:
