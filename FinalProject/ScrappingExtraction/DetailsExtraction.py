@@ -48,7 +48,7 @@ def extract_judges(sentences: List, tags: List, text: List[str]) -> Tuple[List, 
                 tags.append(['O'] * len(raw_text.split(" ")))
                 return judges, i+1
 
-        if re.search('כבוד^', raw_text):
+        if re.search("^כבוד", raw_text):
             flag = True
             sentences.append([raw_text])
             judges.append(raw_text)

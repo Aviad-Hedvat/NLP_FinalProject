@@ -14,7 +14,7 @@ URL = "https://supreme.court.gov.il/Pages/fullsearch.aspx"
 
 
 def scrape_verdicts(trace: bool = True) -> None:
-    save_dir = os.path.join(os.getcwd(), '../corpus')
+    save_dir = os.path.join(os.getcwd(), '../Corpus')
 
     if trace:
         print('scrape verdicts'
