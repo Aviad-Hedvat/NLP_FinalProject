@@ -12,14 +12,15 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 URL = "https://supreme.court.gov.il/Pages/fullsearch.aspx"
 
+
 def scrape_verdicts(trace: bool = True) -> None:
-    save_dir =os.path.join(os.getcwd(), 'corpus')
+    save_dir = os.path.join(os.getcwd(), '../corpus')
 
     if trace:
         print('scrape verdicts'
               f'saving location: {save_dir}\n\n')
 
-    service =Service(executable_path=ChromeDriverManager().install())
+    service = Service(executable_path=ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
     driver.get(URL)
 
@@ -40,8 +41,8 @@ def scrape_verdicts(trace: bool = True) -> None:
 
     driver.execute_script("arguments[0].click()", verdicts_option)
 
-    search_button = driver.find_element(By.XPATH, '//section[@class="search-bottom"]')\
-                    .find_element(By.XPATH, './/button[@type="submit"]')
+    search_button = driver.find_element(By.XPATH, '//section[@class="search-bottom"]') \
+        .find_element(By.XPATH, './/button[@type="submit"]')
 
     driver.execute_script("arguments[0].click()", search_button)
 
@@ -62,10 +63,10 @@ def scrape_verdicts(trace: bool = True) -> None:
         driver.execute_script('arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].offsetHeight;', window)
         html_buttons = driver.find_elements(By.XPATH, '//a[@class="file-link html-link"]')
 
-    html_hrefs =[e.get_attribute('href') for e in html_buttons]
-    html_links =[h if h.startswith("https://supremedecisions.court.gov.il")
-                 else f"https://supremedecisions.court.gov.il/{h}"
-                 for h in html_hrefs]
+    html_hrefs = [e.get_attribute('href') for e in html_buttons]
+    html_links = [h if h.startswith("https://supremedecisions.court.gov.il")
+                  else f"https://supremedecisions.court.gov.il/{h}"
+                  for h in html_hrefs]
 
     if trace:
         print(f'Retrieved {len(html_links)} html links')
