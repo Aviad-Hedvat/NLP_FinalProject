@@ -4,12 +4,10 @@ import numpy as np
 from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 from livelossplot.inputs.tf_keras import PlotLossesCallback
-# from livelossplot.tf_keras import PlotLossesCallback
 
 from keras import Sequential
 from keras.layers import InputLayer, SpatialDropout1D, Bidirectional, LSTM, Embedding, Dense
 from keras.utils import pad_sequences
-# from keras.preprocessing.sequence import pad_sequences
 from keras.callbacks import EarlyStopping
 
 

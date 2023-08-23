@@ -8,13 +8,18 @@ from sklearn.model_selection import train_test_split
 
 from keras.utils import pad_sequences
 from keras import layers as L
-from keras import Model
+from keras import Model, Sequential
+from keras.callbacks import EarlyStopping
+from livelossplot.inputs.tf_keras import PlotLossesCallback
 
 from NerUtils import train
 
 
-def keywords_extraction(docs: Dict[str, List[str]], mode: int = 1, top_keywords: int = 5, ) -> Dict[
-    str, OrderedDict[str, float]]:
+def keywords_extraction(
+        docs: Dict[str, List[str]],
+        mode: int = 1,
+        top_keywords: int = 5
+) -> Dict[str, OrderedDict[str, float]]:
     """
 
     :param docs:
@@ -43,7 +48,7 @@ def keywords_extraction(docs: Dict[str, List[str]], mode: int = 1, top_keywords:
     return scores
 
 
-def tfidf_scores(docs: Dict[v]) -> Dict[str, Dict[str, float]]:
+def tfidf_scores(docs: Dict[str, List[str]]) -> Dict[str, Dict[str, float]]:
     tf, df, scores = {}, {}, {}
 
     for name, doc in docs.items():
@@ -155,3 +160,29 @@ def generate_embeddings_scores(
             rv[name][word] = np.exp(-np.sum((mat[docs_idx[name]] - stack[words_idx[word]]) ** 2))
 
     return rv
+
+
+def train(model: Sequential,
+          X: np.ndarray,
+          X_valid: np.ndarray,
+          t: np.ndarray,
+          t_valid: np.ndarray,
+          epochs: int = 10,
+          batch_size: int = 32
+          ) -> None:
+    model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+    model.summary()
+
+    es = EarlyStopping(monitor='val_accuracy', patience=1, mode='max')
+    callbacks = [PlotLossesCallback(), es]
+
+    model.fit(
+        x=X, y=t,
+        validation_data=(X_valid, t_valid),
+        batch_size=batch_size,
+        epochs=epochs,
+        callbacks=callbacks,
+        verbose=1
+    )
+
+
