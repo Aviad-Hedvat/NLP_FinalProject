@@ -2,7 +2,8 @@ from typing import Dict, List, Tuple
 from functools import reduce
 import numpy as np
 from sklearn.model_selection import train_test_split
-from tqdm import  tqdm
+from tqdm import tqdm
+import string
 
 from TextUtils import list_of_words
 
@@ -131,4 +132,29 @@ def train(model: Sequential,
         callbacks=callbacks,
         verbose=1
     )
+
+def list_of_words(text: str) -> List[str]:
+    text = text.replace(u"ר ש מ ת", u"רשמת")
+    text = text.replace(u"ש ו פ ט", u"שופט")
+    text = text.replace(u"ש ו פ ט ת", u"שופטת")
+    text = text.replace(u"ה נ ש י א ה", u"הנשיאה")
+    text = text.replace(u"נ ג ד", u"נגד")
+
+    punctuation = tuple(string.punctuation)
+    raw_words = []
+    words = text.split()
+    hebrew_alphabet = "אבגדהוזחטיכלמנסעפצקרשתםןףךץ"
+
+    for i in range(len(words)):
+        word = words[i]
+        while word.startswith(punctuation):
+            word = word[1:]
+
+        while word.endswith(punctuation):
+            word = word[:-1]
+
+        if word != "" and any((c in word) for c in hebrew_alphabet):
+            raw_words.append(word)
+
+    return raw_words
 
