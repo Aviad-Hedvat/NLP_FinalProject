@@ -44,13 +44,13 @@ def create_model(input_size: int, vocab_size: int, tags_quantity: int) -> Sequen
 
 
 def train(model: Sequential,
-          X_sens: np.ndarray,
-          X_valid_sens: np.ndarray,
-          t_sens: np.ndarray,
-          t_valid_sens: np.ndarray,
+          X: np.ndarray,
+          X_valid: np.ndarray,
+          t: np.ndarray,
+          t_valid: np.ndarray,
           epochs: int = 10,
           batch_size: int = 32
-) -> None:
+          ) -> None:
     model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
     model.summary()
 
@@ -58,8 +58,8 @@ def train(model: Sequential,
     callbacks = [PlotLossesCallback(), es]
 
     model.fit(
-        x=X_sens, y=t_sens,
-        validation_data=(X_valid_sens, t_valid_sens),
+        x=X, y=t,
+        validation_data=(X_valid, t_valid),
         batch_size=batch_size,
         epochs=epochs,
         callbacks=callbacks,
