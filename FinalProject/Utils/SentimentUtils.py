@@ -5,8 +5,6 @@ from sklearn.model_selection import train_test_split
 from tqdm import tqdm
 import string
 
-from TextUtils import list_of_words
-
 from keras.utils import pad_sequences
 from keras import layers as L
 from keras import Model, Sequential
