@@ -74,7 +74,7 @@ def word2vec_scores(docs: Dict[str, List[str]], epochs: int = 30, size: int = 40
     return generate_embeddings_scores(docs, embeddings)
 
 
-def autoencoder_scores(docs: Dict[str, List[str]], epochs: int = 15, size: int = 400) -> Dict[str, Dict[str, float]]:
+def autoencoder_scores(docs: Dict[str, List[str]], epochs: int = 10, size: int = 400) -> Dict[str, Dict[str, float]]:
     X, t, words_idx = prepare_data(docs)
     autoencoder, encoder = create_encoders(len(words_idx), emb_size=size)
     train(autoencoder, X, t, X, t, epochs=epochs)
