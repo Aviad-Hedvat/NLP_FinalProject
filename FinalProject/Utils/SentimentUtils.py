@@ -94,7 +94,7 @@ def prepare_data(docs: Dict[str, List[str]],
     seqs = pad_sequences(sequences=seqs)
     tg = np.array([tags_idx[tags[name]] for name in names])
 
-    X, X_valid, t, t_valid = train_test_split(seqs, tg, names, test_size=0.25, random_state=42)
+    X, X_valid, t, t_valid = train_test_split(seqs, tg, test_size=0.25, random_state=42)
 
     return X, X_valid, t, t_valid, names, words_idx, tags_idx
 
