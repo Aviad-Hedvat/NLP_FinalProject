@@ -17,7 +17,7 @@ def scrape_verdicts(trace: bool = True) -> None:
     save_dir = os.path.join(os.getcwd(), '../Corpus')
 
     if trace:
-        print('scrape verdicts'
+        print('scrape verdicts\n'
               f'saving location: {save_dir}\n\n')
 
     service = Service(executable_path=ChromeDriverManager().install())
@@ -59,7 +59,7 @@ def scrape_verdicts(trace: bool = True) -> None:
 
     html_buttons = driver.find_elements(By.XPATH, '//a[@class="file-link html-link"]')
 
-    while len(html_buttons) < 500:
+    while len(html_buttons) < 300:
         driver.execute_script('arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].offsetHeight;', window)
         html_buttons = driver.find_elements(By.XPATH, '//a[@class="file-link html-link"]')
 
