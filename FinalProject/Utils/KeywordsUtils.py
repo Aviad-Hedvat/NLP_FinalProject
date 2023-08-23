@@ -12,8 +12,6 @@ from keras import Model, Sequential
 from keras.callbacks import EarlyStopping
 from livelossplot.inputs.tf_keras import PlotLossesCallback
 
-from NerUtils import train
-
 
 def keywords_extraction(
         docs: Dict[str, List[str]],
