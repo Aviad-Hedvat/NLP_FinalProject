@@ -131,8 +131,8 @@ def generate_embeddings_scores(
         docs: Dict[str, List[str]],
         embeddings: Dict[str, np.ndarray]
 ) -> Dict[str, Dict[str, float]]:
-    docs_idx = {d: i for d, i in zip(docs.keys()), range(len(docs))}
-    words_idx = {w: i for w, i in zip(embeddings.keys()), range(len(embeddings))}
+    docs_idx = {d: i for d, i in zip(docs.keys(), range(len(docs)))}
+    words_idx = {w: i for w, i in zip(embeddings.keys(), range(len(embeddings)))}
     idx_words = {i: w for w, i in words_idx.items()}
 
     freqs = np.zeros((len(docs), len(embeddings)), dtype=float)
