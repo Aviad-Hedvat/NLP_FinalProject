@@ -61,7 +61,9 @@ def tag_sentiment(docs: Dict[str, List[str]]) -> Dict[str, str]:
     return tags
 
 
-def sentiment_prediction(docs: Dict[str, List[str]], raw_docs: Dict[str, List[str]]) -> Dict[str, int]:
+def sentiment_prediction(docs: Dict[str, List[str]],
+                         raw_docs: Dict[str, List[str]]
+) -> Tuple[Dict[str, int], Dict[str, str]]:
     tags = tag_sentiment(raw_docs)
     X, X_valid, t, t_valid, docs_names, words_idx, tags_idx = prepare_data(docs, tags)
     model = create_sentiment_model(len(words_idx), len(tags_idx))
@@ -79,7 +81,7 @@ def sentiment_prediction(docs: Dict[str, List[str]], raw_docs: Dict[str, List[st
         preds = np.argmax(model.predict(np.array([seq]), verbose=0)[0]).item()
         rv[name] = idx_tags[preds]
 
-    return rv
+    return rv, tags
 
 
 def prepare_data(docs: Dict[str, List[str]],
